@@ -1,17 +1,30 @@
 <div class="space-y-6">
     {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Leads</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Pipeline across all Noorhan Group divisions.</p>
+    <div class="flex items-center space-x-3">
+        <div class="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-1">
+            <button wire:click="toggleView('table')" class="px-3 py-1.5 text-xs font-semibold rounded-md {{ $view === 'table' ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300' }}">
+                Table
+            </button>
+
+            <button wire:click="toggleView('kanban')" class="px-3 py-1.5 text-xs font-semibold rounded-md {{ $view === 'kanban' ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300' }}">
+                Kanban
+            </button>
         </div>
-        <div class="flex items-center space-x-3">
-            <div class="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-1">
-                <button wire:click="toggleView('table')" class="px-3 py-1.5 text-xs font-semibold rounded-md {{ $view === 'table' ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300' }}">Table</button>
-                <button wire:click="toggleView('kanban')" class="px-3 py-1.5 text-xs font-semibold rounded-md {{ $view === 'kanban' ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300' }}">Kanban</button>
-            </div>
-            <button wire:click="$dispatch('open-lead-form')" class="py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm transition">+ New Lead</button>
-        </div>
+
+        <button wire:click="$dispatch('open-card-scan')"
+            class="py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+            Scan Card
+        </button>
+
+        <button wire:click="$dispatch('open-quick-capture')"
+            class="py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+            Quick Capture
+        </button>
+
+        <button wire:click="$dispatch('open-lead-form')"
+            class="py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm transition">
+            + New Lead
+        </button>
     </div>
 
     @php $stats = $this->stats(); @endphp
@@ -95,4 +108,6 @@
     @else
         <livewire:leads.lead-kanban />
     @endif
+    <livewire:capture.quick-capture />
+    <livewire:capture.business-card-upload />
 </div>

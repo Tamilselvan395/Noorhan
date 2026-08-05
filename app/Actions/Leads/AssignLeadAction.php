@@ -9,13 +9,20 @@ use App\Notifications\LeadAssignedNotification;
 
 class AssignLeadAction
 {
-    public function execute(Lead $lead, ?User $assignee, User $assignedBy): void
+    public function execute(Lead $lead, ?User $assignee, ?User $assignedBy = null): void
     {
-        $lead->update(['assigned_to' => $assignee?->id, 'needs_triage' => $assignee ? false : $lead->needs_triage]);
+        $lead->update([
+            'assigned_to'  => $assignee?->id,
+            'needs_triage' => $assignee ? false : $lead->needs_triage,
+        ]);
 
-        $lead->logActivity($assignee ? "assigned the lead to {$assignee->name}" : 'unassigned the lead');
+        $lead->logActivity(
+            $assignee
+                ? "assigned the lead to {$assignee->name}"
+                : 'unassigned the lead'
+        );
 
-        if ($assignee && $assignee->id !== $assignedBy->id) {
+        if ($assignee && $assignee->id !== $assignedBy?->id) {
             $assignee->notify(new LeadAssignedNotification($lead));
         }
 

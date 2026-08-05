@@ -26,6 +26,12 @@
             @if (in_array(\App\Enums\LeadStatus::Lost, $this->allowedTransitions()))
                 <button wire:click="openLostModal" class="px-3 py-2 rounded-lg text-xs font-semibold bg-red-600 hover:bg-red-700 text-white transition">Mark Lost</button>
             @endif
+            @if (! $lead->customer_id)
+                <button wire:click="convertToCustomer" class="px-3 py-2 rounded-lg text-xs font-semibold bg-green-600 hover:bg-green-700 text-white transition">Convert to Customer</button>
+            @else
+                <a href="{{ route('customers.show', $lead->customer_id) }}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400">View Customer</a>
+            @endif
+
             <button wire:click="$dispatch('open-lead-form', { leadId: {{ $lead->id }} })" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Edit</button>
             <button wire:click="deleteLead" wire:confirm="Delete this lead permanently?" class="px-3 py-2 rounded-lg text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30">Delete</button>
         </div>

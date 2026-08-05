@@ -5,10 +5,16 @@ namespace App\Events\Leads;
 use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
 class LeadAssigned
 {
-    use Dispatchable;
+    use Dispatchable, SerializesModels;
 
-    public function __construct(public Lead $lead, public ?User $assignee, public User $assignedBy) {}
+    public function __construct(
+        public Lead $lead,
+        public ?User $assignee,
+        public ?User $assignedBy,
+    ) {
+    }
 }

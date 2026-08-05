@@ -103,4 +103,12 @@ class LeadShow extends Component
             'timeline' => $this->lead->activities()->with('user')->latest()->get(),
         ]);
     }
+    public function convertToCustomer(\App\Actions\Customers\ConvertLeadToCustomerAction $convert): void
+    {
+        Gate::authorize('update', $this->lead);
+
+        $customer = $convert->execute($this->lead);
+
+        $this->dispatch('notify', message: "Converted to customer: {$customer->displayName()}", type: 'success');
+    }
 }

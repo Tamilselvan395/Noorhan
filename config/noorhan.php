@@ -33,5 +33,9 @@ return [
         'whatsapp_verify_token'    => env('WHATSAPP_VERIFY_TOKEN'),      // WhatsApp Cloud API handshake
         'google_ads_shared_secret' => env('GOOGLE_ADS_SHARED_SECRET'),   // Google Ads lead webhook
     ],
+    'routing' => [
+        'auto_route_on_create'   => (bool) env('NOORHAN_AUTO_ROUTE', true),
+        'classifier_threshold'   => (float) env('NOORHAN_CLASSIFIER_THRESHOLD', 0.5),
+    ],
     
 ];
