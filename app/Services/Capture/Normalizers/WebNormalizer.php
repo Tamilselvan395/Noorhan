@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class WebNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::Website;
     }
@@ -24,7 +24,7 @@ class WebNormalizer implements CaptureNormalizerInterface
 
         return new LeadCaptureDTO(
             name: $name,
-            source: $this->source(),
+            source: self::source(),
             email: $payload['email'] ?? null,
             phone: $payload['phone'] ?? null,
             company_name: $payload['company_name'] ?? null,

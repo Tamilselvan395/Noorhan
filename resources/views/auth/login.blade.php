@@ -4,13 +4,13 @@
 @section('content')
 <div class="min-h-screen flex">
     {{-- Brand Panel --}}
-    <div class="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white">
+    <div class="hidden lg:flex lg:w-1/2 shrink-0 flex-col justify-between p-12 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white">
         <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-xl font-bold">N</div>
             <span class="text-xl font-semibold">{{ config('noorhan.name') }}</span>
         </div>
         <div>
-            <h1 class="text-4xl font-bold leading-tight">Your Business<br>Operating System.</h1>
+            <h1 class="text-4xl font-bold leading-tight break-words">Your Business<br>Operating System.</h1>
             <p class="mt-4 text-blue-100 max-w-md">Leads, quotations, suppliers, WhatsApp automation and AI insights — unified across every Noorhan Group division.</p>
         </div>
         <p class="text-sm text-blue-200">© {{ date('Y') }} Noorhan Group. All rights reserved.</p>
@@ -69,13 +69,13 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <label class="flex items-center text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
                         <input type="checkbox" name="remember" value="1"
                                class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-800">
                         <span class="ml-2">Remember me</span>
                     </label>
-                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">Forgot password?</a>
                 </div>
 
                 <button type="submit"

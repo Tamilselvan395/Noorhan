@@ -8,7 +8,7 @@ use App\Enums\LeadSource;
 
 class BusinessCardNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::BusinessCard;
     }
@@ -17,7 +17,7 @@ class BusinessCardNormalizer implements CaptureNormalizerInterface
     {
         return new LeadCaptureDTO(
             name: $payload['name'] ?? 'Business Card Scan · '.now()->format('M d, h:i A'),
-            source: $this->source(),
+            source: self::source(),
             subject: 'Scanned business card',
             requirements: $payload['note'] ?? null,
             business_card_path: $payload['path'] ?? null,

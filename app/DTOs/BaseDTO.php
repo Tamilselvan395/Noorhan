@@ -2,7 +2,7 @@
 
 namespace App\DTOs;
 
-abstract class BaseDTO
+readonly class BaseDTO
 {
     public function toArray(): array
     {

@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class GoogleAdsNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::GoogleAds;
     }
@@ -26,7 +26,7 @@ class GoogleAdsNormalizer implements CaptureNormalizerInterface
 
         return new LeadCaptureDTO(
             name: $name,
-            source: $this->source(),
+            source: self::source(),
             email: $lead['email'] ?? null,
             phone: $lead['phone'] ?? null,
             subject: 'Google Ads lead',

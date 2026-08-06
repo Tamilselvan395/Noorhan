@@ -7,7 +7,7 @@ use App\Enums\LeadSource;
 
 interface CaptureNormalizerInterface
 {
-    public function source(): LeadSource;
+    public static function source(): LeadSource;
 
     /** Transform a raw channel payload into a normalized capture DTO. */
     public function normalize(array $payload): LeadCaptureDTO;

@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class GenericNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::Manual;
     }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/auth.php';
 
+Route::redirect('/', '/dashboard');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::view('/settings/profile', 'settings.profile')->name('settings.profile');
@@ -20,6 +22,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.show');
+
+    Route::get('/suppliers', [App\Http\Controllers\SupplierController::class, 'index'])->name('suppliers.index');
+    Route::get('/suppliers/compare', [App\Http\Controllers\SupplierController::class, 'compare'])->name('suppliers.compare');
+    Route::get('/suppliers/{supplier}', [App\Http\Controllers\SupplierController::class, 'show'])->name('suppliers.show');
 
     Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');

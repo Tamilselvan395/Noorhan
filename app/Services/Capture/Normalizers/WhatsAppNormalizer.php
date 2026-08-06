@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class WhatsAppNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::WhatsApp;
     }
@@ -29,7 +29,7 @@ class WhatsAppNormalizer implements CaptureNormalizerInterface
 
         return new LeadCaptureDTO(
             name: $value['contacts'][0]['profile']['name'] ?? 'WhatsApp Enquiry',
-            source: $this->source(),
+            source: self::source(),
             phone: isset($message['from']) ? '+'.$message['from'] : null,
             subject: 'WhatsApp enquiry',
             requirements: "WhatsApp message:\n{$body}",

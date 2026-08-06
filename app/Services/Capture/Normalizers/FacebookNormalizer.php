@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class FacebookNormalizer implements CaptureNormalizerInterface
 {
-    public function source(): LeadSource
+    public static function source(): LeadSource
     {
         return LeadSource::FacebookAds;
     }
@@ -25,7 +25,7 @@ class FacebookNormalizer implements CaptureNormalizerInterface
 
         return new LeadCaptureDTO(
             name: $fields->get('full_name') ?? $fields->get('name') ?? 'Facebook Lead',
-            source: $this->source(),
+            source: self::source(),
             email: $fields->get('email'),
             phone: $fields->get('phone_number'),
             company_name: $fields->get('company_name'),
