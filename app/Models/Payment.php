@@ -18,7 +18,7 @@ class Payment extends Model
     use HasFactory, HasActivityLog, HasAuditLog, SoftDeletes;
 
     protected $fillable = [
-        'reference', 'customer_id', 'amount', 'currency', 'payment_date',
+        'reference', 'customer_id', 'amount', 'currency', 'payment_date','zoho_id',
         'method', 'reference_number', 'status', 'notes', 'created_by',
     ];
 

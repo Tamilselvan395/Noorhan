@@ -3,6 +3,7 @@
 namespace App\Actions\Quotations;
 
 use App\Enums\QuotationStatus;
+use App\Events\Quotations\QuotationSubmitted;
 use App\Models\Quotation;
 use RuntimeException;
 
@@ -20,5 +21,8 @@ class SubmitForApprovalAction
         ]);
 
         $quotation->logActivity('submitted the quotation for approval');
+
+        // Notifies all potential approvers (everyone except the author)
+        event(new QuotationSubmitted($quotation));
     }
 }

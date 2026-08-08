@@ -47,6 +47,11 @@ class Supplier extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    public function enquiries(): HasMany
+    {
+        return $this->hasMany(SupplierEnquiry::class);
+    }
+
     /* ---- Accessors ---- */
 
     public function division(): Division

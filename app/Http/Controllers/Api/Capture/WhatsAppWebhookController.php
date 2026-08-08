@@ -27,6 +27,13 @@ class WhatsAppWebhookController extends Controller
         $hasMessage = isset($payload['entry'][0]['changes'][0]['value']['messages'][0]);
 
         if ($hasMessage) {
+            $value = $payload['entry'][0]['changes'][0]['value'];
+
+            event(new \App\Events\WhatsApp\WhatsAppMessageReceived(
+                (string) ($value['messages'][0]['from'] ?? ''),
+                $value['messages'][0]['text']['body'] ?? null,
+            ));
+
             $service->ingest(LeadSource::WhatsApp, $payload);
         }
 

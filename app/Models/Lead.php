@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Lead extends Model
 {
@@ -71,6 +72,11 @@ class Lead extends Model
     public function source(): LeadSource
     {
         return LeadSource::from($this->source);
+    }
+
+    public function communications(): MorphMany
+    {
+        return $this->morphMany(Communication::class, 'communicable');
     }
 
     /* ---- Scopes ---- */

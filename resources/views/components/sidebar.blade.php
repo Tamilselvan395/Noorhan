@@ -16,8 +16,17 @@
         <a href="{{ route('settings.security') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('settings.security') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             Security Center
         </a>
+        <a href="{{ route('two-factor.settings') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('two-factor.settings') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            Two-Factor Auth
+        </a>
+        <a href="{{ route('settings.zoho') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('settings.zoho') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            Zoho Books
+        </a>
         <a href="{{ route('settings.routing-rules') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('settings.routing-rules') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             Routing Rules
+        </a>
+        <a href="{{ route('settings.notifications') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('settings.notifications') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            Notifications
         </a>
         <a href="{{ route('leads.index') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('leads.*') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
@@ -63,9 +72,38 @@
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             Payments
         </a>
+        <a href="{{ route('whatsapp.index') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('whatsapp.*') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            WhatsApp
+        </a>
+        <a href="{{ route('marketing.index') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('marketing.*') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.58 8.828A3 3 0 0018 13M18 13l3.5-1.5M18 11l3.5 1.5M5.58 15.172L3 16"/></svg>
+            Marketing
+        </a>
+        <a href="{{ route('reports.index') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('reports.*') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Reports
+        </a>
         <a href="{{ route('leads.triage') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('leads.triage') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
             Triage Queue
+        </a>
+        <div class="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+            <p class="px-4 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">System</p>
+            <a href="{{ route('system.activity') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('system.activity') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                Activity Log
+            </a>
+            <a href="{{ route('system.audit') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('system.audit') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                Audit Trail
+            </a>
+            <a href="{{ route('system.scheduler') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('system.scheduler') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                Scheduler
+            </a>
+        </div>
+
+        <a href="{{ route('settings.index') }}" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('settings.index') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-2.572-1.065c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Settings
         </a>
     </nav>
 </aside>

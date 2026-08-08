@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('reference', 30)->unique();
             $table->foreignId('lead_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('zoho_id')->nullable()->index();
             $table->string('division', 30)->index();
             $table->string('status', 20)->default('draft')->index();
             $table->unsignedInteger('version')->default(1);

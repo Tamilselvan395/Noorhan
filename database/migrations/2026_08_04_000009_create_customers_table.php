@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 120);
             $table->string('company_name', 160)->nullable();
+            $table->string('zoho_id')->nullable()->index();
             $table->string('email', 160)->nullable()->index();
             $table->string('phone', 30)->nullable();
             $table->string('whatsapp', 30)->nullable();

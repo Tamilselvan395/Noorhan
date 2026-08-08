@@ -22,7 +22,7 @@ class Invoice extends Model
     public array $auditExclude = ['password', 'remember_token'];
 
     protected $fillable = [
-        'reference', 'sales_order_id', 'customer_id', 'division', 'status', 'currency',
+        'reference', 'sales_order_id', 'customer_id','zoho_id', 'division', 'status', 'currency',
         'discount_type', 'discount_value', 'tax_rate', 'subtotal', 'discount_amount',
         'tax_amount', 'total', 'total_cost', 'margin_percent', 'issue_date', 'due_date',
         'paid_amount', 'balance_due', 'sent_via', 'sent_at', 'notes', 'terms', 'created_by',

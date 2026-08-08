@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class AuditLog extends Model
 {
@@ -20,20 +21,24 @@ class AuditLog extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
 
-class Activity extends Model
-{
-    protected $guarded = [];
-    protected $casts = ['properties' => 'array'];
-
-    public function subject(): MorphTo
+    public function scopeUser(Builder $query, int $userId): Builder
     {
-        return $this->morphTo();
+        return $query->where('user_id', $userId);
     }
 
-    public function user(): BelongsTo
+    public function scopeEvent(Builder $query, string $event): Builder
     {
-        return $this->belongsTo(User::class);
+        return $query->where('event', $event);
+    }
+
+    public function scopeAuditableType(Builder $query, string $type): Builder
+    {
+        return $query->where('auditable_type', $type);
+    }
+
+    public function scopeBetween(Builder $query, $from, $to): Builder
+    {
+        return $query->whereBetween('created_at', [$from, $to]);
     }
 }

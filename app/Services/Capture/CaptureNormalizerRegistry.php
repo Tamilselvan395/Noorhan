@@ -11,20 +11,32 @@ class CaptureNormalizerRegistry
     /** @var array<string, class-string<CaptureNormalizerInterface>> */
     private array $normalizers = [];
 
-    public function register(string $class): self
+    /**
+     * Register a normalizer instance by extracting its source enum.
+     */
+    public function register(CaptureNormalizerInterface $normalizer): self
     {
-        if (! is_subclass_of($class, CaptureNormalizerInterface::class)) {
-            throw new InvalidArgumentException("{$class} must implement CaptureNormalizerInterface.");
+        $source = $normalizer->source();
+
+        if (! $source instanceof LeadSource) {
+            throw new InvalidArgumentException('Normalizer must return a valid LeadSource enum.');
         }
 
-        $this->normalizers[$class::source()->value] = $class;
+        $this->normalizers[$source->value] = get_class($normalizer);
 
         return $this;
     }
 
+    /**
+     * Resolve the normalizer for a given lead source.
+     */
     public function forSource(LeadSource $source): CaptureNormalizerInterface
     {
         $class = $this->normalizers[$source->value] ?? $this->normalizers[LeadSource::Manual->value];
+
+        if (! $class) {
+            throw new InvalidArgumentException("No normalizer registered for source: {$source->value}");
+        }
 
         return app($class);
     }

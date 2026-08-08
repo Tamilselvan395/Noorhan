@@ -22,7 +22,7 @@ class Quotation extends Model
     public array $auditExclude = ['password', 'remember_token'];
 
     protected $fillable = [
-        'reference', 'lead_id', 'customer_id', 'division', 'status', 'version', 'parent_id', 'converted_order_id',
+        'reference', 'lead_id', 'customer_id', 'division', 'status', 'version', 'parent_id','zoho_id', 'converted_order_id',
         'currency', 'discount_type', 'discount_value', 'tax_rate', 'subtotal', 'discount_amount',
         'tax_amount', 'total', 'total_cost', 'margin_percent', 'requires_approval',
         'approval_notes', 'approved_by', 'approved_at', 'sent_via', 'sent_at', 'accepted_at',

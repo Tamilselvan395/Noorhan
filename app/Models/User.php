@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Concerns\HasNotificationPreferences;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasActivityLog, HasAuditLog;
+    use HasFactory, Notifiable, HasActivityLog, HasAuditLog, HasNotificationPreferences;
 
     /** Attributes the audit trail must NEVER store. */
     public array $auditExclude = [
@@ -21,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name', 'email', 'password',
-        'last_login_at', 'last_login_ip', 'failed_login_attempts', 'locked_until',
+        'last_login_at', 'last_login_ip', 'failed_login_attempts', 'locked_until','notification_preferences', 'theme',
         'password_changed_at', 'two_factor_secret', 'two_factor_recovery_codes', 'two_factor_confirmed_at',
     ];
 
@@ -36,6 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'password_changed_at'     => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
             'password'                => 'hashed',
+            'notification_preferences' => 'array',
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace App\Actions\Quotations;
 
 use App\Enums\QuotationStatus;
+use App\Events\Quotations\QuotationRejected;
 use App\Models\Quotation;
 use App\Models\User;
 use RuntimeException;
@@ -23,5 +24,8 @@ class RejectQuotationAction
         ]);
 
         $quotation->logActivity("rejected the quotation: {$reason}");
+
+        // Notifies the quotation author with the rejection reason
+        event(new QuotationRejected($quotation, $reason));
     }
 }

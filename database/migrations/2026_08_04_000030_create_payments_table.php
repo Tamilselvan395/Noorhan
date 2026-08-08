@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference', 30)->unique();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->string('zoho_id')->nullable()->index();
             $table->decimal('amount', 12, 2);
             $table->string('currency', 10)->default('USD');
             $table->date('payment_date');

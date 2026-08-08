@@ -21,7 +21,7 @@ class Customer extends Model
     public array $auditExclude = ['password', 'remember_token'];
 
     protected $fillable = [
-        'name', 'company_name', 'email', 'phone', 'whatsapp', 'type', 'status',
+        'name','zoho_id', 'company_name', 'email', 'phone', 'whatsapp','whatsapp_opted_out', 'whatsapp_last_messaged_at', 'type', 'status',
         'address', 'city', 'country', 'division', 'vehicle_brand_category',
         'company_id', 'lead_id', 'owner_id', 'credit_limit','credit_balance', 'outstanding_balance',
         'notes', 'last_activity_at',
@@ -34,6 +34,8 @@ class Customer extends Model
             'credit_balance' => 'decimal:2', 
             'outstanding_balance' => 'decimal:2',
             'last_activity_at' => 'datetime',
+            'whatsapp_opted_out' => 'bool',
+            'whatsapp_last_messaged_at' => 'datetime',
         ];
     }
 

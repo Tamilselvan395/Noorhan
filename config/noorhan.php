@@ -42,5 +42,35 @@ return [
         'min_margin' => (float) env('NOORHAN_QTN_MIN_MARGIN', 10.0),        // below → requires approval
         'max_discount' => (float) env('NOORHAN_QTN_MAX_DISCOUNT', 5.0),     // above → requires approval
     ],
+    'audit' => [
+        'retention_days' => (int) env('NOORHAN_AUDIT_RETENTION', 365),
+        'activity_retention_days' => (int) env('NOORHAN_ACTIVITY_RETENTION', 180),
+
+        // Canonical list of audited models (drives UI filters & integrity checks)
+        'audited_models' => [
+            \App\Models\User::class,
+            \App\Models\Lead::class,
+            \App\Models\Customer::class,
+            \App\Models\Company::class,
+            \App\Models\Supplier::class,
+            \App\Models\Product::class,
+            \App\Models\Quotation::class,
+            \App\Models\SalesOrder::class,
+            \App\Models\Invoice::class,
+            \App\Models\Payment::class,
+            \App\Models\SupplierEnquiry::class,
+            \App\Models\MarketingCampaign::class,
+        ],
+    ],
+    'scheduler' => [
+        'tasks' => [
+            ['key' => 'digest',       'label' => 'Notification Digest',            'command' => 'notifications:digest',  'frequency' => 'Daily 08:00'],
+            ['key' => 'wa_automations','label' => 'WhatsApp Automations',          'command' => 'whatsapp:automations',  'frequency' => 'Daily 09:00'],
+            ['key' => 'wa_campaigns', 'label' => 'Scheduled WhatsApp Campaigns',   'command' => 'whatsapp:campaigns',    'frequency' => 'Every 5 minutes'],
+            ['key' => 'qtn_expire',   'label' => 'Expire Quotations',              'command' => 'quotations:expire',     'frequency' => 'Daily 01:00'],
+            ['key' => 'zoho_retry',   'label' => 'Retry Failed Zoho Syncs',        'command' => 'zoho:retry-failed',     'frequency' => 'Every 30 minutes'],
+            ['key' => 'prune',        'label' => 'Prune System Logs',              'command' => 'system:prune-logs',     'frequency' => 'Monthly (1st, 02:00)'],
+        ],
+    ],
     
 ];

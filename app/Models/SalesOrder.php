@@ -21,7 +21,7 @@ class SalesOrder extends Model
     public array $auditExclude = ['password', 'remember_token'];
 
     protected $fillable = [
-        'reference', 'quotation_id', 'lead_id', 'customer_id', 'division', 'invoice_id', 'status',
+        'reference', 'quotation_id', 'lead_id', 'customer_id', 'division', 'invoice_id','zoho_id', 'status',
         'currency', 'discount_type', 'discount_value', 'tax_rate', 'subtotal',
         'discount_amount', 'tax_amount', 'total', 'total_cost', 'margin_percent',
         'expected_delivery_date', 'delivered_at', 'delivery_address', 'delivery_notes',

@@ -10,8 +10,11 @@ class SetTheme
 {
     public function handle(Request $request, Closure $next)
     {
-        $theme = $request->cookie('theme', config('noorhan.theme.default'));
+        $theme = $request->user()?->theme
+            ?? $request->cookie('theme', config('noorhan.theme.default'));
+
         view()->share('currentTheme', $theme);
+
         return $next($request);
     }
 }

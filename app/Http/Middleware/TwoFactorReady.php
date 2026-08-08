@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 
 class TwoFactorReady
 {
-    public function __construct(private TwoFactorService $twoFactor) {}
-
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
 
-        if ($user && $this->twoFactor->requiresChallenge($request, $user)) {
-            // Challenge screen ships with the 2FA activation module.
+        if ($user
+            && $this->twoFactor->requiresChallenge($request, $user)
+            && ! $request->routeIs('two-factor.*')
+            && ! $request->routeIs('logout')
+        ) {
             return redirect()->route('two-factor.challenge');
         }
 

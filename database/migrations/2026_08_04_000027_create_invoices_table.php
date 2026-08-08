@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('reference', 30)->unique();
             $table->foreignId('sales_order_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->string('zoho_id')->nullable()->index();
             $table->string('division', 30)->index();
             $table->string('status', 20)->default('draft')->index();
             $table->string('currency', 10)->default('USD');
