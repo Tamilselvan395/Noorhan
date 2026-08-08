@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreignId('lead_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('owner_id')->nullable()->constrained('users')->nullOnDelete();
             $table->decimal('credit_limit', 12, 2)->nullable();   // used by Zoho/credit engine later
+            $table->decimal('credit_balance', 12, 2)->default(0); // <-- Add this
             $table->decimal('outstanding_balance', 12, 2)->default(0);
             $table->text('notes')->nullable();
             $table->timestamp('last_activity_at')->nullable();

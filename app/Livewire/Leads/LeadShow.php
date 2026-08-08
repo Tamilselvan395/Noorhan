@@ -111,4 +111,8 @@ class LeadShow extends Component
 
         $this->dispatch('notify', message: "Converted to customer: {$customer->displayName()}", type: 'success');
     }
+    public function openEnquiry(): void
+    {
+        $this->dispatch('open-enquiry-form', supplierId: null, leadId: $this->lead->id);
+    }
 }

@@ -14,6 +14,8 @@ use App\Services\Capture\Normalizers\GoogleAdsNormalizer;
 use App\Services\Capture\Normalizers\WebNormalizer;
 use App\Services\Capture\Normalizers\WhatsAppNormalizer;
 use App\Services\Dashboard\WidgetRegistry;
+use App\Services\Dashboard\Widgets\CustomersWidget;
+use App\Services\Dashboard\Widgets\OpenOrdersWidget;
 use App\Services\Dashboard\Widgets\ActiveNowWidget;
 use App\Services\Dashboard\Widgets\OpenLeadsWidget;
 use App\Services\Dashboard\Widgets\PipelineValueWidget;
@@ -69,6 +71,8 @@ class AppServiceProvider extends ServiceProvider
         $registry->register(ActiveNowWidget::class);
         $registry->register(OpenLeadsWidget::class);
         $registry->register(PipelineValueWidget::class);
+        $registry->register(CustomersWidget::class);
+        $registry->register(OpenOrdersWidget::class);
 
         /*
         |--------------------------------------------------------------------------
@@ -78,17 +82,18 @@ class AppServiceProvider extends ServiceProvider
 
         $normalizers = $this->app->make(CaptureNormalizerRegistry::class);
 
-        $normalizers->register(WebNormalizer::class);
-        $normalizers->register(FacebookNormalizer::class);
-        $normalizers->register(WhatsAppNormalizer::class);
-        $normalizers->register(GoogleAdsNormalizer::class);
-        $normalizers->register(BusinessCardNormalizer::class);
-        $normalizers->register(GenericNormalizer::class);
+        // Pass instances (new ClassName()) instead of strings (ClassName::class)
+        $normalizers->register(new WebNormalizer());
+        $normalizers->register(new FacebookNormalizer());
+        $normalizers->register(new WhatsAppNormalizer());
+        $normalizers->register(new GoogleAdsNormalizer());
+        $normalizers->register(new BusinessCardNormalizer());
+        $normalizers->register(new GenericNormalizer());
+
+        
 
         Event::listen(\App\Events\Leads\LeadCreated::class, \App\Listeners\Routing\RouteNewLead::class);
         Event::listen(\App\Events\Leads\LeadUpdated::class, \App\Listeners\Routing\RouteOnUpdate::class);
-
-        $registry->register(\App\Services\Dashboard\Widgets\CustomersWidget::class);
 
         /*
         |--------------------------------------------------------------------------

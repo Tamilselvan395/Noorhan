@@ -34,6 +34,7 @@
 
             <button wire:click="$dispatch('open-lead-form', { leadId: {{ $lead->id }} })" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Edit</button>
             <button wire:click="deleteLead" wire:confirm="Delete this lead permanently?" class="px-3 py-2 rounded-lg text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30">Delete</button>
+            <button wire:click="openEnquiry" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Ask Suppliers</button>
         </div>
     </div>
 

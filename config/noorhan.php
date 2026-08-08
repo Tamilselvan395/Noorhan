@@ -37,5 +37,10 @@ return [
         'auto_route_on_create'   => (bool) env('NOORHAN_AUTO_ROUTE', true),
         'classifier_threshold'   => (float) env('NOORHAN_CLASSIFIER_THRESHOLD', 0.5),
     ],
+    'quotation' => [
+        'default_valid_days' => (int) env('NOORHAN_QTN_VALID_DAYS', 15),
+        'min_margin' => (float) env('NOORHAN_QTN_MIN_MARGIN', 10.0),        // below → requires approval
+        'max_discount' => (float) env('NOORHAN_QTN_MAX_DISCOUNT', 5.0),     // above → requires approval
+    ],
     
 ];

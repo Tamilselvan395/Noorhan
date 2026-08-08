@@ -9,7 +9,19 @@
             </div>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $supplier->division()->label() }} · {{ $supplier->country ?? '—' }} · {{ $supplier->payment_terms ?? 'No terms' }}</p>
         </div>
-        <button wire:click="$dispatch('open-supplier-form', { supplierId: {{ $supplier->id }} })" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Edit</button>
+        <div class="flex items-center gap-2">
+            <button
+                wire:click="$dispatch('open-enquiry-form', { supplierId: {{ $supplier->id }}, leadId: null })"
+                class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold">
+                + New Enquiry
+            </button>
+
+            <button
+                wire:click="$dispatch('open-supplier-form', { supplierId: {{ $supplier->id }} })"
+                class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                Edit
+            </button>
+        </div>
     </div>
 
     <div class="flex space-x-1 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">

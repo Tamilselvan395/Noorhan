@@ -23,7 +23,7 @@ class Customer extends Model
     protected $fillable = [
         'name', 'company_name', 'email', 'phone', 'whatsapp', 'type', 'status',
         'address', 'city', 'country', 'division', 'vehicle_brand_category',
-        'company_id', 'lead_id', 'owner_id', 'credit_limit', 'outstanding_balance',
+        'company_id', 'lead_id', 'owner_id', 'credit_limit','credit_balance', 'outstanding_balance',
         'notes', 'last_activity_at',
     ];
 
@@ -31,6 +31,7 @@ class Customer extends Model
     {
         return [
             'credit_limit' => 'decimal:2',
+            'credit_balance' => 'decimal:2', 
             'outstanding_balance' => 'decimal:2',
             'last_activity_at' => 'datetime',
         ];
