@@ -70,6 +70,22 @@ return [
             ['key' => 'qtn_expire',   'label' => 'Expire Quotations',              'command' => 'quotations:expire',     'frequency' => 'Daily 01:00'],
             ['key' => 'zoho_retry',   'label' => 'Retry Failed Zoho Syncs',        'command' => 'zoho:retry-failed',     'frequency' => 'Every 30 minutes'],
             ['key' => 'prune',        'label' => 'Prune System Logs',              'command' => 'system:prune-logs',     'frequency' => 'Monthly (1st, 02:00)'],
+
+            ['key' => 'ai_scores',   'label' => 'AI Score Computation', 'command' => 'ai:compute-scores', 'frequency' => 'Daily 06:00'],
+            ['key' => 'ai_briefing', 'label' => 'AI Daily Briefing',    'command' => 'ai:briefing',        'frequency' => 'Daily 07:00'],
+        
+        ],
+    ],
+    'ai' => [
+        'provider' => env('AI_PROVIDER', 'deterministic'), // deterministic|openai
+        'openai' => [
+            'key' => env('OPENAI_API_KEY'),
+            'model' => env('OPENAI_MODEL', 'gpt-4o-mini'),
+        ],
+        'thresholds' => [
+            'churn_high' => 65,
+            'churn_medium' => 35,
+            'health_good' => 70,
         ],
     ],
     

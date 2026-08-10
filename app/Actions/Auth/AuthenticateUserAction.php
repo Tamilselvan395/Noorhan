@@ -43,6 +43,12 @@ class AuthenticateUserAction
             );
         }
 
+        if ($user && ! $user->is_active) {
+            $this->security->log(SecurityEvent::LoginBlockedLocked, $user, ['reason' => 'inactive_account']);
+
+            return LoginResult::locked('Account deactivated. Contact your administrator.');
+        }
+
         // 2 — Request rate limiting
         if ($this->throttle->isThrottled($dto->email, $ip)) {
             $seconds = $this->throttle->availableIn($dto->email, $ip);

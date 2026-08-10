@@ -16,10 +16,17 @@ class Overview extends Component
 {
     public string $period = DashboardPeriod::Month->value;
 
-    public function __construct(
-        private WidgetRegistry $registry,
-        private ChartDataService $charts,
-    ) {}
+    // Services are resolved fresh on every request via boot().
+    // They must NOT be constructor-injected: Livewire bypasses the
+    // container when it instantiates components.
+    private WidgetRegistry $registry;
+    private ChartDataService $charts;
+
+    public function boot(WidgetRegistry $registry, ChartDataService $charts): void
+    {
+        $this->registry = $registry;
+        $this->charts   = $charts;
+    }
 
     public function setPeriod(string $period): void
     {
@@ -66,9 +73,9 @@ class Overview extends Component
 
         return [
             'activity' => [
-                'labels' => $success['labels'],
+                'labels'  => $success['labels'],
                 'success' => $success['values'],
-                'failed' => $failed['values'],
+                'failed'  => $failed['values'],
             ],
             'platforms' => $platforms,
         ];

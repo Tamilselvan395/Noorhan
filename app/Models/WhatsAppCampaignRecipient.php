@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WhatsAppCampaignRecipient extends Model
 {
+    protected $table = 'whatsapp_campaign_recipients';
+
     protected $fillable = ['whatsapp_campaign_id', 'customer_id', 'status', 'error', 'sent_at'];
 
     protected $casts = ['sent_at' => 'datetime'];

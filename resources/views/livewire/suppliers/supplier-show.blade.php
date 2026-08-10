@@ -9,24 +9,12 @@
             </div>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $supplier->division()->label() }} · {{ $supplier->country ?? '—' }} · {{ $supplier->payment_terms ?? 'No terms' }}</p>
         </div>
-        <div class="flex items-center gap-2">
-            <button
-                wire:click="$dispatch('open-enquiry-form', { supplierId: {{ $supplier->id }}, leadId: null })"
-                class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold">
-                + New Enquiry
-            </button>
-
-            <button
-                wire:click="$dispatch('open-supplier-form', { supplierId: {{ $supplier->id }} })"
-                class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                Edit
-            </button>
-        </div>
+        <button wire:click="$dispatch('open-enquiry-form', { supplierId: {{ $supplier->id }}, leadId: null })" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold">+ New Enquiry</button>
     </div>
 
     <div class="flex space-x-1 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-        @foreach (['overview' => 'Overview', 'contacts' => 'Contacts', 'prices' => 'Price Lists', 'ratings' => 'Ratings & Performance', 'timeline' => 'Timeline'] as $key => $label)
-            <button wire:click="switchTab('{{ $key }}')" class="px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition {{ $tab === $key ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300' }}">
+        @foreach (['overview' => 'Overview', 'contacts' => 'Contacts', 'prices' => 'Price Lists', 'ratings' => 'Ratings & Performance', 'documents' => 'Documents', 'timeline' => 'Timeline'] as $key => $label)
+            <button wire:click="switchTab('{{ $key }})" class="px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition {{ $tab === $key ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300' }}">
                 {{ $label }}
             </button>
         @endforeach
@@ -57,7 +45,7 @@
                 @if ($breakdown['quality'] !== null)
                     <dl class="text-sm space-y-2">
                         @foreach ($breakdown as $dimension => $score)
-                            <div class="flex justify-between"><dt class="text-gray-400 capitalize">{{ $dimension }}</dt>
+                            <div class="flex justify-between items-center"><dt class="text-gray-400 capitalize">{{ $dimension }}</dt>
                                 <dd class="w-2/3"><div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"><div class="h-2 rounded-full bg-amber-500" style="width: {{ ($score / 5) * 100 }}%"></div></div></dd>
                                 <dd class="text-gray-800 dark:text-gray-200">{{ $score }}/5</dd></div>
                         @endforeach
@@ -67,6 +55,7 @@
                 @endif
             </x-card>
         </div>
+
     @elseif ($tab === 'contacts')
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <x-card>
@@ -104,6 +93,7 @@
                 </x-card>
             </div>
         </div>
+
     @elseif ($tab === 'prices')
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <x-card>
@@ -147,6 +137,7 @@
                 </x-card>
             </div>
         </div>
+
     @elseif ($tab === 'ratings')
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <x-card>
@@ -182,6 +173,10 @@
                 </x-card>
             </div>
         </div>
+
+    @elseif ($tab === 'documents')
+        @include('documents._panel', ['entity' => $supplier])
+
     @else
         <x-card>
             <x-slot:header><h3 class="font-semibold">Activity Timeline</h3></x-slot:header>

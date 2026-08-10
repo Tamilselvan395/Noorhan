@@ -11,10 +11,14 @@ use Livewire\Component;
 
 class SessionManager extends Component
 {
-    public function __construct(
-        public SessionManagementService $sessionService,
-        private SecurityLogRepository $security,
-    ) {}
+    private SessionManagementService $sessionService;
+    private SecurityLogRepository $security;
+
+    public function boot(SessionManagementService $sessionService, SecurityLogRepository $security): void
+    {
+        $this->sessionService = $sessionService;
+        $this->security = $security;
+    }
 
     public function revoke(string $id, RevokeSessionAction $action): void
     {

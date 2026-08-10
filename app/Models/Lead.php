@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use App\Models\Document;
 
 class Lead extends Model
 {
@@ -77,6 +78,11 @@ class Lead extends Model
     public function communications(): MorphMany
     {
         return $this->morphMany(Communication::class, 'communicable');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     }
 
     /* ---- Scopes ---- */

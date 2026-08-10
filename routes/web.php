@@ -7,6 +7,7 @@ require __DIR__.'/auth.php';
 Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::view('/settings/profile', 'settings.profile')->name('settings.profile');
     Route::view('/settings/security', 'settings.security')->name('settings.security');
@@ -49,6 +50,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/settings/notifications', 'settings.notifications')->name('settings.notifications');
 
     Route::view('/settings', 'settings.index')->name('settings.index');
+
+    Route::view('/developers', 'developers.index')->name('developers.index');
+
+    Route::middleware('role:Super Admin|HR')->group(function () {
+        Route::view('/admin/users', 'admin.users')->name('admin.users');
+    });
+
+    Route::middleware('role:Super Admin')->group(function () {
+        Route::view('/admin/roles', 'admin.roles')->name('admin.roles');
+    });
+
+    Route::get('/documents', [App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');
+    Route::get('/documents/{document}/download', [App\Http\Controllers\DocumentController::class, 'download'])->name('documents.download');
+    Route::delete('/documents/{document}', [App\Http\Controllers\DocumentController::class, 'destroy'])->name('documents.destroy');
+
+    Route::get('/swiftec', [App\Http\Controllers\DivisionController::class, 'swiftec'])->name('swiftec.index');
+
+    Route::get('/wiperex', [App\Http\Controllers\DivisionController::class, 'wiperex'])->name('wiperex.index');
+
+    // Staff
+    Route::get('/otozaar', [App\Http\Controllers\DivisionController::class, 'otozaar'])->name('otozaar.index');
+
+    // Inside the portal group:
+    Route::get('/appointments', [App\Http\Controllers\Portal\PortalController::class, 'appointments'])->name('appointments');
+    Route::post('/appointments/{appointment}/cancel', [App\Http\Controllers\Portal\PortalController::class, 'appointmentCancel'])->name('appointments.cancel');
     
 });
 
@@ -98,3 +124,31 @@ Route::prefix('system')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/audit/export', [App\Http\Controllers\SystemLogController::class, 'exportAudit'])->name('system.audit.export');
     Route::get('/scheduler', fn () => view('system.scheduler'))->name('system.scheduler');
 });
+
+Route::prefix('portal')->middleware(['auth', 'verified', 'portal.customer'])->name('portal.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Portal\PortalController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/quotations', [App\Http\Controllers\Portal\PortalController::class, 'quotations'])->name('quotations');
+    Route::get('/quotations/{quotation}', [App\Http\Controllers\Portal\PortalController::class, 'quotationShow'])->name('quotations.show');
+    Route::post('/quotations/{quotation}/accept', [App\Http\Controllers\Portal\PortalController::class, 'quotationAccept'])->name('quotations.accept');
+    Route::post('/quotations/{quotation}/decline', [App\Http\Controllers\Portal\PortalController::class, 'quotationDecline'])->name('quotations.decline');
+
+    Route::get('/invoices', [App\Http\Controllers\Portal\PortalController::class, 'invoices'])->name('invoices');
+    Route::get('/invoices/{invoice}', [App\Http\Controllers\Portal\PortalController::class, 'invoiceShow'])->name('invoices.show');
+
+    Route::get('/orders', [App\Http\Controllers\Portal\PortalController::class, 'orders'])->name('orders');
+    Route::get('/orders/{order}', [App\Http\Controllers\Portal\PortalController::class, 'orderShow'])->name('orders.show');
+
+    Route::get('/payments', [App\Http\Controllers\Portal\PortalController::class, 'payments'])->name('payments');
+
+    Route::get('/profile', [App\Http\Controllers\Portal\PortalController::class, 'profile'])->name('profile');
+});
+
+Route::get('/ai', fn () => view('ai.index'))->middleware(['auth', 'verified'])->name('ai.index');
+
+// Public unsubscribe (signed token verified in controller)
+Route::get('/unsubscribe/{customer}/{token}', [App\Http\Controllers\UnsubscribeController::class, 'handle'])->name('unsubscribe');
+
+// Inside auth group:
+Route::view('/communications', 'communications.index')->name('communications.index');
+Route::view('/communications/templates', 'communications.templates')->name('communications.templates');

@@ -20,8 +20,6 @@ class SuppliersReport implements ReportInterface
     public function rows(Carbon $from, Carbon $to): array
     {
         return Supplier::query()->withCount(['ratings', 'priceLists'])->get()->map(function (Supplier $s) {
-            $enquiries = $s->supplierEnquiries ?? collect();
-
             return [
                 $s->name, $s->division()->label(), $s->overallRating() ?? '—',
                 $s->enquiries()->count(),

@@ -32,7 +32,7 @@ class ProductForm extends Component
     public bool $is_active = true;
 
     /** @var array<int, array{key: string, value: string}> */
-    public array $attributes = [];
+    public array $productAttributes = [];
 
     #[On('open-product-form')]
     public function openForm(?int $productId = null): void
@@ -49,7 +49,7 @@ class ProductForm extends Component
             }
             $this->cost_price = (string) $product->cost_price;
             $this->sale_price = (string) $product->sale_price;
-            $this->attributes = collect($product->attributes ?? [])
+            $this->productAttributes = collect($product->attributes ?? [])
                 ->map(fn ($value, $key) => ['key' => (string) $key, 'value' => (string) $value])
                 ->values()->all();
         } else {
@@ -59,11 +59,11 @@ class ProductForm extends Component
             $this->sale_price = '';
             $this->tax_rate = '5';
             $this->is_active = true;
-            $this->attributes = [['key' => '', 'value' => '']];
+            $this->productAttributes = [['key' => '', 'value' => '']];
         }
 
-        if ($this->attributes === []) {
-            $this->attributes = [['key' => '', 'value' => '']];
+        if ($this->productAttributes === []) {
+            $this->productAttributes = [['key' => '', 'value' => '']];
         }
 
         $this->open = true;
@@ -83,20 +83,20 @@ class ProductForm extends Component
 
     public function addAttributeRow(): void
     {
-        $this->attributes[] = ['key' => '', 'value' => ''];
+        $this->productAttributes[] = ['key' => '', 'value' => ''];
     }
 
     public function removeAttributeRow(int $index): void
     {
-        unset($this->attributes[$index]);
-        $this->attributes = array_values($this->attributes);
+        unset($this->productAttributes[$index]);
+        $this->productAttributes = array_values($this->productAttributes);
     }
 
     public function save(CreateProductAction $create, UpdateProductAction $update): void
     {
         $data = $this->validate(StoreProductRequest::rules($this->productId));
 
-        $attributes = collect($this->attributes)
+        $attributes = collect($this->productAttributes)
             ->filter(fn ($row) => trim($row['key']) !== '')
             ->mapWithKeys(fn ($row) => [trim($row['key']) => trim($row['value'])])
             ->all();

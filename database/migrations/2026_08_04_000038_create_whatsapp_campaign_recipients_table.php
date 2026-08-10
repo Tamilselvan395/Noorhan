@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('error', 300)->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamps();
-            $table->unique(['whatsapp_campaign_id', 'customer_id']);
+            $table->unique(['whatsapp_campaign_id', 'customer_id'], 'wcr_campaign_customer_unique');
         });
     }
 

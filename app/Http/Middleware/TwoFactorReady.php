@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TwoFactorReady
 {
+    public function __construct(
+        protected TwoFactorService $twoFactor,
+    ) {}
+
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();

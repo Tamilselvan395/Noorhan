@@ -24,7 +24,11 @@ class LoginController extends Controller
         $result = $authenticate->execute(LoginDTO::fromRequest($request));
 
         if ($result->status === LoginStatus::Success) {
-            return redirect()->intended(route('dashboard'));
+            $user = auth()->user();
+
+            return $user->customer_id
+                ? redirect()->intended(route('portal.dashboard'))
+                : redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors(['email' => $result->message])->onlyInput('email');

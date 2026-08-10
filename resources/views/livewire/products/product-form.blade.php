@@ -73,10 +73,10 @@
                         <button type="button" wire:click="addAttributeRow" class="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">+ Add</button>
                     </div>
                     <div class="mt-2 space-y-2">
-                        @foreach ($attributes as $index => $row)
+                        @foreach ($productAttributes as $index => $row)
                             <div class="flex space-x-2" wire:key="attr-{{ $index }}">
-                                <input wire:model="attributes.{{ $index }}.key" placeholder="Key" class="w-1/3 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                                <input wire:model="attributes.{{ $index }}.value" placeholder="Value" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <input wire:model="productAttributes.{{ $index }}.key" placeholder="Key" class="w-1/3 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <input wire:model="productAttributes.{{ $index }}.value" placeholder="Value" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
                                 <button type="button" wire:click="removeAttributeRow({{ $index }})" class="shrink-0 text-red-500 hover:text-red-700">&times;</button>
                             </div>
                         @endforeach

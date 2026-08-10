@@ -31,7 +31,7 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2 space-y-6">
             <x-card>
                 <x-slot:header><h3 class="font-semibold">Items</h3></x-slot:header>
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -92,14 +92,16 @@
                 </dl>
             </x-card>
 
-            {{-- Replace the "Record Payment" card with this: --}}
             @if ((float) $invoice->balance_due > 0 && ! in_array($invoice->status()->value, ['draft', 'cancelled']))
                 <x-card>
                     <x-slot:header><h3 class="font-semibold">Collect Payment</h3></x-slot:header>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Balance due: <strong class="text-amber-600 dark:text-amber-400">{{ $invoice->currency }} {{ number_format((float) $invoice->balance_due, 2) }}</strong></p>
-                    <button wire:click="$dispatch('open-payment-form', { customerId: {{ $invoice->customer_id }}, invoiceId: {{ $invoice->id } })" class="w-full py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold">Record Payment</button>
+                    <button wire:click="$dispatch('open-payment-form', { customerId: {{ $invoice->customer_id }}, invoiceId: {{ $invoice->id }} })" class="w-full py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold">Record Payment</button>
                 </x-card>
             @endif
+
+            {{--  Documents --}}
+            @include('documents._panel', ['entity' => $invoice])
         </div>
     </div>
 </div>

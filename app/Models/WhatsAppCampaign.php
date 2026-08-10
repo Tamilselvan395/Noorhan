@@ -11,6 +11,8 @@ use Illuminate\Support\Collection;
 
 class WhatsAppCampaign extends Model
 {
+    protected $table = 'whatsapp_campaigns';
+
     protected $fillable = [
         'name', 'audience_type', 'audience_value', 'message_type', 'template_name',
         'body', 'media_url', 'media_kind', 'status', 'scheduled_at', 'sent_count', 'marketing_campaign_id',

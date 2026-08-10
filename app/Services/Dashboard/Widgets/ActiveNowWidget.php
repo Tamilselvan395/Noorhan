@@ -22,7 +22,7 @@ class ActiveNowWidget implements DashboardWidgetInterface
     public function data(DashboardPeriod $period): WidgetData
     {
         $active = UserSession::query()
-            ->where('last_activity', '>=', now()->subMinutes(15)->toUnixTimestamp())
+            ->where('last_activity', '>=', now()->subMinutes(15)->timestamp)
             ->count();
 
         return new WidgetData(

@@ -9,15 +9,19 @@
     {{-- Header --}}
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 flex-wrap">
                 <a href="{{ route('leads.index') }}" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">&larr;</a>
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $lead->name }}</h1>
                 <span class="px-2 py-0.5 rounded-full text-xs font-medium {{ $lead->status()->badge() }}">{{ $lead->status()->label() }}</span>
                 <span class="px-2 py-0.5 rounded-full text-xs font-medium {{ $lead->priority()->badge() }}">{{ $lead->priority()->label() }}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-400" title="AI lead score">
+                    AI {{ app(\App\Services\Ai\LeadScoringService::class)->score($lead) }}
+                </span>
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $lead->company_name }} · {{ $lead->division()->label() }} · {{ $lead->source()->label() }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $lead->company_name ?? '' }} · {{ $lead->division()->label() }} · {{ $lead->source()->label() }}</p>
         </div>
-        <div class="flex items-center space-x-2">
+
+        <div class="flex flex-wrap items-center gap-2">
             @foreach ($this->allowedTransitions() as $next)
                 @if ($next !== \App\Enums\LeadStatus::Lost)
                     <button wire:click="moveStage('{{ $next->value }}')" class="px-3 py-2 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">→ {{ $next->label() }}</button>
@@ -26,15 +30,14 @@
             @if (in_array(\App\Enums\LeadStatus::Lost, $this->allowedTransitions()))
                 <button wire:click="openLostModal" class="px-3 py-2 rounded-lg text-xs font-semibold bg-red-600 hover:bg-red-700 text-white transition">Mark Lost</button>
             @endif
+            <button wire:click="openEnquiry" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Ask Suppliers</button>
             @if (! $lead->customer_id)
                 <button wire:click="convertToCustomer" class="px-3 py-2 rounded-lg text-xs font-semibold bg-green-600 hover:bg-green-700 text-white transition">Convert to Customer</button>
             @else
                 <a href="{{ route('customers.show', $lead->customer_id) }}" class="px-3 py-2 rounded-lg text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400">View Customer</a>
             @endif
-
             <button wire:click="$dispatch('open-lead-form', { leadId: {{ $lead->id }} })" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Edit</button>
             <button wire:click="deleteLead" wire:confirm="Delete this lead permanently?" class="px-3 py-2 rounded-lg text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30">Delete</button>
-            <button wire:click="openEnquiry" class="px-3 py-2 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Ask Suppliers</button>
         </div>
     </div>
 
@@ -62,7 +65,6 @@
                 @endif
             </x-card>
 
-            {{-- Notes --}}
             <x-card>
                 <x-slot:header><h3 class="font-semibold">Add Note</h3></x-slot:header>
                 <form wire:submit="addNote" class="space-y-3">
@@ -72,7 +74,6 @@
                 </form>
             </x-card>
 
-            {{-- Timeline --}}
             <x-card>
                 <x-slot:header><h3 class="font-semibold">Activity Timeline</h3></x-slot:header>
                 <ul class="space-y-4">
@@ -116,9 +117,12 @@
                     <div class="flex justify-between"><dt class="text-gray-400">Created By</dt><dd class="text-gray-700 dark:text-gray-200">{{ $lead->creator?->name ?? 'System' }}</dd></div>
                     <div class="flex justify-between"><dt class="text-gray-400">Last Contacted</dt><dd class="text-gray-700 dark:text-gray-200">{{ $lead->last_contacted_at?->diffForHumans() ?? '—' }}</dd></div>
                     <div class="flex justify-between"><dt class="text-gray-400">Closed</dt><dd class="text-gray-700 dark:text-gray-200">{{ $lead->closed_at?->format('M d, Y') ?? '—' }}</dd></div>
-                    <div class="flex justify-between"><dt class="text-gray-400">AI Score</dt><dd class="text-gray-700 dark:text-gray-200">{{ $lead->score ?? '— (AI Engine pending)' }}</dd></div>
+                    <div class="flex justify-between"><dt class="text-gray-400">AI Score</dt><dd class="text-gray-700 dark:text-gray-200">{{ $lead->score ?? '—' }}</dd></div>
                 </dl>
             </x-card>
+
+            {{--  Documents --}}
+            @include('documents._panel', ['entity' => $lead])
         </div>
     </div>
 

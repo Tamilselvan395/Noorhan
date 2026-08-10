@@ -7,12 +7,14 @@ use App\Enums\CustomerType;
 use App\Enums\Division;
 use App\Traits\HasActivityLog;
 use App\Traits\HasAuditLog;
+use App\Models\SalesOrder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
@@ -24,7 +26,7 @@ class Customer extends Model
         'name','zoho_id', 'company_name', 'email', 'phone', 'whatsapp','whatsapp_opted_out', 'whatsapp_last_messaged_at', 'type', 'status',
         'address', 'city', 'country', 'division', 'vehicle_brand_category',
         'company_id', 'lead_id', 'owner_id', 'credit_limit','credit_balance', 'outstanding_balance',
-        'notes', 'last_activity_at',
+        'notes', 'last_activity_at', 'email_opted_out',
     ];
 
     protected function casts(): array
@@ -36,6 +38,7 @@ class Customer extends Model
             'last_activity_at' => 'datetime',
             'whatsapp_opted_out' => 'bool',
             'whatsapp_last_messaged_at' => 'datetime',
+            'email_opted_out' => 'bool',
         ];
     }
 
@@ -59,6 +62,11 @@ class Customer extends Model
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(SalesOrder::class);
     }
 
     /* ---- Enum accessors ---- */

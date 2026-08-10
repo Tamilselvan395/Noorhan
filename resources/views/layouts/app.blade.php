@@ -35,7 +35,13 @@
 
     <!-- Global Modals & Notifications -->
     <x-toast />
-    
+    @if (session('status'))
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                window.dispatchEvent(new CustomEvent('notify', { detail: { message: @json(session('status')), type: 'success' } }));
+            });
+        </script>
+    @endif
     @livewireScripts
     @stack('scripts')
 </body>

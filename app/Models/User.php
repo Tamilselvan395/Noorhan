@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Concerns\HasNotificationPreferences;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasActivityLog, HasAuditLog, HasNotificationPreferences;
+    use HasFactory, Notifiable, HasActivityLog, HasAuditLog, HasNotificationPreferences, HasRoles;
 
     /** Attributes the audit trail must NEVER store. */
     public array $auditExclude = [
@@ -22,8 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name', 'email', 'password',
-        'last_login_at', 'last_login_ip', 'failed_login_attempts', 'locked_until','notification_preferences', 'theme',
-        'password_changed_at', 'two_factor_secret', 'two_factor_recovery_codes', 'two_factor_confirmed_at',
+        'last_login_at', 'last_login_ip', 'failed_login_attempts', 'locked_until','notification_preferences', 'theme', 'customer_id',
+        'password_changed_at', 'two_factor_secret', 'two_factor_recovery_codes', 'two_factor_confirmed_at', 'is_active',
     ];
 
     protected $hidden = ['password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes'];
@@ -38,7 +39,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'two_factor_confirmed_at' => 'datetime',
             'password'                => 'hashed',
             'notification_preferences' => 'array',
+            'is_active' => 'bool',
         ];
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function isLocked(): bool
